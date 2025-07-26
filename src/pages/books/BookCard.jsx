@@ -19,11 +19,11 @@ const BookCard = ({book}) => {
             {/* Image Section */}
             <div className="h-36 w-28 sm:h-40 sm:w-32 border rounded-md flex-shrink-0">
                 <Link to={`/books/${book._id}`}>
-                    <img
-                        src={getImgUrl(book?.coverImage)}
-                        alt={book?.title}
-                        className="w-full h-full object-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
-                    />
+                     <img
+  src={book.coverImage }
+  alt={book.title}
+  className="mb-8 w-full h-auto object-cover rounded"
+/>
                 </Link>
             </div>
 
