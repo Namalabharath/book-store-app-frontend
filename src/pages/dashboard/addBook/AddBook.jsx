@@ -10,33 +10,23 @@ const AddBook = () => {
     const [imageFile, setimageFile] = useState(null);
     const [addBook, {isLoading, isError}] = useAddBookMutation()
     const [imageFileName, setimageFileName] = useState('')
-    const onSubmit = async (data) => {
- 
-        const newBookData = {
-            ...data,
-            coverImage: imageFileName
-        }
-        try {
-            await addBook(newBookData).unwrap();
-            Swal.fire({
-                title: "Book added",
-                text: "Your book is uploaded successfully!",
-                icon: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, It's Okay!"
-              });
-              reset();
-              setimageFileName('')
-              setimageFile(null);
-        } catch (error) {
-            console.error(error);
-            alert("Failed to add book. Please try again.")   
-        }
-      
-    }
-
+      const onSubmit = async (data) => {
+  try {
+    await addBook(data).unwrap();
+    Swal.fire({
+      title: "Book added",
+      text: "Your book is uploaded successfully!",
+      icon: "success",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, It's Okay!"
+    });
+    reset();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to add book. Please try again.");
+  }
+};
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if(file) {
