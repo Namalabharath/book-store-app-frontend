@@ -45,9 +45,9 @@ const CartPage = () => {
                                                 <li key={product?._id} className="flex py-6">
                                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                         <img
-                                                            alt=""
-                                                            src={`${getImgUrl(product?.coverImage)}`}
-                                                            className="h-full w-full object-cover object-center"
+                                                        src={book.coverImage }
+                                                        alt={book.title}
+                                                        className="mb-8 w-full h-auto object-cover rounded"
                                                         />
                                                     </div>
 
