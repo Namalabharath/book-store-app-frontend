@@ -1,20 +1,23 @@
 import React from 'react'
 import { FiShoppingCart } from "react-icons/fi"
 import { useParams } from "react-router-dom"
-
 import { getImgUrl } from '../../utils/getImgUrl';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/features/cart/cartSlice';
 import { useFetchBookByIdQuery } from '../../redux/features/books/booksApi';
+import { useAuth } from '../../context/AuthContext';
 
 const SingleBook = () => {
     const {id} = useParams();
     const {data: book, isLoading, isError} = useFetchBookByIdQuery(id);
-
     const dispatch =  useDispatch();
+    const { currentUser } = useAuth();
 
     const handleAddToCart = (product) => {
-        dispatch(addToCart(product))
+        dispatch(addToCart({ 
+            product, 
+            userId: currentUser?.id 
+        }));
     }
 
     if(isLoading) return <div>Loading...</div>
@@ -25,11 +28,16 @@ const SingleBook = () => {
 
             <div className=''>
                 <div>
-                    <img
+                    {/* <img
                         src={`${getImgUrl(book.coverImage)}`}
                         alt={book.title}
                         className="mb-8"
-                    />
+                    /> */}
+                    <img
+  src={book.coverImage }
+  alt={book.title}
+  className="mb-8 w-full h-auto object-cover rounded"
+/>
                 </div>
 
                 <div className='mb-5'>

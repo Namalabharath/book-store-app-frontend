@@ -2,20 +2,57 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getImgUrl } from '../../utils/getImgUrl';
-import { clearCart, removeFromCart } from '../../redux/features/cart/cartSlice';
+import { 
+    clearCart, 
+    removeFromCart, 
+    increaseQuantity, 
+    decreaseQuantity, 
+    updateQuantity 
+} from '../../redux/features/cart/cartSlice';
+import { useAuth } from '../../context/AuthContext';
 
 const CartPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
-    const dispatch =  useDispatch()
+    const dispatch =  useDispatch();
+    const { currentUser } = useAuth();
 
-    const totalPrice =  cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
+    const totalPrice = cartItems.reduce((acc, item) => acc + (item.newPrice * (item.quantity || 1)), 0).toFixed(2);
+    const totalItems = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
     const handleRemoveFromCart = (product) => {
-        dispatch(removeFromCart(product))
+        dispatch(removeFromCart({ 
+            product, 
+            userId: currentUser?.id 
+        }));
     }
 
-    const handleClearCart  = () => {
-        dispatch(clearCart())
+    const handleClearCart = () => {
+        dispatch(clearCart(currentUser?.id));
+    }
+
+    const handleIncreaseQuantity = (product) => {
+        dispatch(increaseQuantity({ 
+            product, 
+            userId: currentUser?.id 
+        }));
+    }
+
+    const handleDecreaseQuantity = (product) => {
+        dispatch(decreaseQuantity({ 
+            product, 
+            userId: currentUser?.id 
+        }));
+    }
+
+    const handleQuantityChange = (product, quantity) => {
+        const newQuantity = parseInt(quantity);
+        if (newQuantity > 0) {
+            dispatch(updateQuantity({ 
+                product, 
+                quantity: newQuantity, 
+                userId: currentUser?.id 
+            }));
+        }
     }
     return (
         <>
@@ -45,10 +82,11 @@ const CartPage = () => {
                                                 <li key={product?._id} className="flex py-6">
                                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                         <img
-                                                            alt=""
-                                                            src={`${getImgUrl(product?.coverImage)}`}
+                                                            src={product.coverImage}
+                                                            alt={product.title}
                                                             className="h-full w-full object-cover object-center"
                                                         />
+  
                                                     </div>
 
                                                     <div className="ml-4 flex flex-1 flex-col">
@@ -57,12 +95,41 @@ const CartPage = () => {
                                                                 <h3>
                                                                     <Link to='/'>{product?.title}</Link>
                                                                 </h3>
-                                                                <p className="sm:ml-4">₹{product?.newPrice}</p>
+                                                                <p className="sm:ml-4">₹{(product?.newPrice * (product.quantity || 1)).toFixed(2)}</p>
                                                             </div>
                                                             <p className="mt-1 text-sm text-gray-500 capitalize"><strong>Category: </strong>{product?.category}</p>
+                                                            <p className="mt-1 text-sm text-gray-600"><strong>Price each: </strong>₹{product?.newPrice}</p>
                                                         </div>
                                                         <div className="flex flex-1 flex-wrap items-end justify-between space-y-2 text-sm">
-                                                            <p className="text-gray-500"><strong>Qty:</strong> 1</p>
+                                                            {/* Quantity Controls */}
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="text-gray-500 font-medium">Qty:</span>
+                                                                <div className="flex items-center border rounded">
+                                                                    <button 
+                                                                        onClick={() => handleDecreaseQuantity(product)}
+                                                                        className="w-8 h-8 bg-gray-100 hover:bg-gray-200 flex items-center justify-center disabled:opacity-50"
+                                                                        disabled={(product.quantity || 1) <= 1}
+                                                                    >
+                                                                        <span className="text-lg font-semibold">−</span>
+                                                                    </button>
+                                                                    
+                                                                    <input
+                                                                        type="number"
+                                                                        min="1"
+                                                                        max="99"
+                                                                        value={product.quantity || 1}
+                                                                        onChange={(e) => handleQuantityChange(product, e.target.value)}
+                                                                        className="w-12 h-8 text-center border-l border-r text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                                                                    />
+                                                                    
+                                                                    <button 
+                                                                        onClick={() => handleIncreaseQuantity(product)}
+                                                                        className="w-8 h-8 bg-gray-100 hover:bg-gray-200 flex items-center justify-center"
+                                                                    >
+                                                                        <span className="text-lg font-semibold">+</span>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
 
                                                             <div className="flex">
                                                                 <button
@@ -90,7 +157,7 @@ const CartPage = () => {
 
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
                     <div className="flex justify-between text-base font-medium text-gray-900">
-                        <p>Subtotal</p>
+                        <p>Subtotal ({totalItems} items)</p>
                         <p>₹{totalPrice ? totalPrice : 0}</p>
                     </div>
                     <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>

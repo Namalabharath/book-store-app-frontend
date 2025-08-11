@@ -10,33 +10,26 @@ const AddBook = () => {
     const [imageFile, setimageFile] = useState(null);
     const [addBook, {isLoading, isError}] = useAddBookMutation()
     const [imageFileName, setimageFileName] = useState('')
-    const onSubmit = async (data) => {
- 
-        const newBookData = {
-            ...data,
-            coverImage: imageFileName
-        }
-        try {
-            await addBook(newBookData).unwrap();
-            Swal.fire({
-                title: "Book added",
-                text: "Your book is uploaded successfully!",
-                icon: "success",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, It's Okay!"
-              });
-              reset();
-              setimageFileName('')
-              setimageFile(null);
-        } catch (error) {
-            console.error(error);
-            alert("Failed to add book. Please try again.")   
-        }
-      
-    }
 
+    const onSubmit = async (data) => {
+  try {
+    await addBook(data).unwrap();
+    Swal.fire({
+      title: "Book added",
+      text: "Your book is uploaded successfully!",
+      icon: "success",
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, It's Okay!"
+    });
+    reset();
+  } catch (error) {
+    console.error(error);
+    alert("Failed to add book. Please try again.");
+  }
+};
+
+    
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if(file) {
@@ -116,12 +109,15 @@ const AddBook = () => {
           
         />
 
-        {/* Cover Image Upload */}
-        <div className="mb-4">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">Cover Image</label>
-          <input type="file" accept="image/*" onChange={handleFileChange} className="mb-2 w-full" />
-          {imageFileName && <p className="text-sm text-gray-500">Selected: {imageFileName}</p>}
-        </div>
+      
+        {/* Cover Image URL */}
+<InputField
+  label="Cover Image URL"
+  name="coverImage"
+  placeholder="Paste image URL here"
+  register={register}
+/>
+
 
         {/* Submit Button */}
         <button type="submit" className="w-full py-2 bg-green-500 text-white font-bold rounded-md">

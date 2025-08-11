@@ -1,17 +1,20 @@
 import React from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { getImgUrl } from '../../utils/getImgUrl'
-
 import { Link } from'react-router-dom'
-
- import { useDispatch } from'react-redux'
- import { addToCart } from '../../redux/features/cart/cartSlice'
+import { useDispatch } from'react-redux'
+import { addToCart } from '../../redux/features/cart/cartSlice'
+import { useAuth } from '../../context/AuthContext'
 
 const BookCard = ({book}) => {
     const dispatch =  useDispatch();
+    const { currentUser } = useAuth();
 
     const handleAddToCart = (product) => {
-        dispatch(addToCart(product))
+        dispatch(addToCart({ 
+            product, 
+            userId: currentUser?.id 
+        }));
     }
     return (
         <div className="rounded-lg transition-shadow duration-300 p-4 shadow-md bg-white w-80 sm:w-96 h-50 flex flex-row items-center gap-4">
@@ -19,11 +22,16 @@ const BookCard = ({book}) => {
             {/* Image Section */}
             <div className="h-36 w-28 sm:h-40 sm:w-32 border rounded-md flex-shrink-0">
                 <Link to={`/books/${book._id}`}>
-                    <img
+                    {/* <img
                         src={getImgUrl(book?.coverImage)}
                         alt={book?.title}
                         className="w-full h-full object-cover p-2 rounded-md cursor-pointer hover:scale-105 transition-all duration-200"
-                    />
+                    /> */}
+                    <img
+  src={book.coverImage || 'https://via.placeholder.com/300x400?text=No+Image'}
+  alt={book.title}
+  className="mb-8 w-full h-auto object-cover rounded"
+/>
                 </Link>
             </div>
 

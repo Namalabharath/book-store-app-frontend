@@ -9,7 +9,8 @@ import { useCreateOrderMutation } from '../../redux/features/orders/ordersApi';
 
 const CheckoutPage = () => {
     const cartItems = useSelector(state => state.cart.cartItems);
-    const totalPrice = cartItems.reduce((acc, item) => acc + item.newPrice, 0).toFixed(2);
+    const totalPrice = cartItems.reduce((acc, item) => acc + (item.newPrice * (item.quantity || 1)), 0).toFixed(2);
+    const totalItems = cartItems.reduce((acc, item) => acc + (item.quantity || 1), 0);
     const {  currentUser} = useAuth()
     
     const {
@@ -24,7 +25,17 @@ const CheckoutPage = () => {
 
     const [isChecked, setIsChecked] = useState(false)
     const onSubmit = async (data) => {
-     
+        // Check if cart is empty
+        if (!cartItems || cartItems.length === 0) {
+            Swal.fire({
+                title: "Cart is Empty",
+                text: "Please add some books to your cart before placing an order.",
+                icon: "warning",
+                confirmButtonText: "OK"
+            });
+            return;
+        }
+
         const newOrder = {
             name: data.name,
             email: currentUser?.email,
@@ -36,9 +47,13 @@ const CheckoutPage = () => {
         
             },
             phone: data.phone,
-            productIds: cartItems.map(item => item?._id),
+            cartItems: cartItems, // Send full cart items with quantities
             totalPrice: totalPrice,
         }
+
+        console.log("Cart items before sending:", cartItems); // Debug log
+        console.log("Total items in cart:", cartItems.length); // Debug log
+        console.log("Sending order data:", newOrder); // Debug log
         
         try {
             await createOrder(newOrder).unwrap();
@@ -66,8 +81,8 @@ const CheckoutPage = () => {
                     <div>
                         <div>
                             <h2 className="font-semibold text-xl text-gray-600 mb-2">Cash On Delivery</h2>
-                            <p className="text-gray-500 mb-2">Total Price:₹ {totalPrice}</p>
-                            <p className="text-gray-500 mb-6">Items: {cartItems.length > 0 ? cartItems.length : 0}</p>
+                            <p className="text-gray-500 mb-2">Total Price: ₹{totalPrice}</p>
+                            <p className="text-gray-500 mb-6">Items: {totalItems} ({cartItems.length} unique books)</p>
                         </div>
 
                         

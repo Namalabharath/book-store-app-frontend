@@ -7,23 +7,35 @@ import { FaRegHeart } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import avatarImg from "../assets/avatar.png"
 import { useSelector } from "react-redux";
-
-
 import { useAuth } from "../context/AuthContext";
-const navigation=[
-{name:"Dashboard",href:"/dashboard"}, 
- { name:"Orders",href:"/orders"},
-  {name:"Cart Page",href:"/cart"},
- { name:"Check Out",href:"/checkout"},
 
+// Role-aware navigation function
+const getNavigationItems = (currentUser) => {
+  if (!currentUser) {
+    return [];
+  }
+  
+  const commonItems = [
+    { name: "Orders", href: "/orders" },
+    { name: "Cart Page", href: "/cart" },
+    { name: "Check Out", href: "/checkout" },
+  ];
 
-]
+  if (currentUser.role === 'admin') {
+    return [
+      { name: "Dashboard", href: "/dashboard" },
+      ...commonItems
+    ];
+  } else {
+    return [
+      ...commonItems
+    ];
+  }
+};
 
 const Navbar = () => {
-
-
-
   const {currentUser, logout} = useAuth()
+  const navigation = getNavigationItems(currentUser);
     
   const handleLogOut = () => {
       logout()

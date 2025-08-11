@@ -13,38 +13,70 @@ import news3 from "../../assets/news/news-3.png"
 import news4 from "../../assets/news/news-4.png"
 import { Link } from 'react-router-dom';
 
+// const news = [
+//     {
+//         "id": 1,
+//         "title": "Global Climate Summit Calls for Urgent Action",
+//         "description": "World leaders gather at the Global Climate Summit to discuss urgent strategies to combat climate change, focusing on reducing carbon emissions and fostering renewable energy solutions.",
+//         "image": news1
+//     },
+//     {
+//         "id": 2,
+//         "title": "Breakthrough in AI Technology Announced",
+//         "description": "A major breakthrough in artificial intelligence has been announced by researchers, with new advancements promising to revolutionize industries from healthcare to finance.",
+//         "image": news2
+//     },
+//     {
+//         "id": 3,
+//         "title": "New Space Mission Aims to Explore Distant Galaxies",
+//         "description": "NASA has unveiled plans for a new space mission that will aim to explore distant galaxies, with hopes of uncovering insights into the origins of the universe.",
+//         "image": news3
+//     },
+//     {
+//         "id": 4,
+//         "title": "Stock Markets Reach Record Highs Amid Economic Recovery",
+//         "description": "Global stock markets have reached record highs as signs of economic recovery continue to emerge following the challenges posed by the global pandemic.",
+//         "image": news4
+//     },
+//     {
+//         "id": 5,
+//         "title": "Innovative New Smartphone Released by Leading Tech Company",
+//         "description": "A leading tech company has released its latest smartphone model, featuring cutting-edge technology, improved battery life, and a sleek new design.",
+//         "image": news2
+//     }
+// ]
 const news = [
-    {
-        "id": 1,
-        "title": "Global Climate Summit Calls for Urgent Action",
-        "description": "World leaders gather at the Global Climate Summit to discuss urgent strategies to combat climate change, focusing on reducing carbon emissions and fostering renewable energy solutions.",
-        "image": news1
-    },
-    {
-        "id": 2,
-        "title": "Breakthrough in AI Technology Announced",
-        "description": "A major breakthrough in artificial intelligence has been announced by researchers, with new advancements promising to revolutionize industries from healthcare to finance.",
-        "image": news2
-    },
-    {
-        "id": 3,
-        "title": "New Space Mission Aims to Explore Distant Galaxies",
-        "description": "NASA has unveiled plans for a new space mission that will aim to explore distant galaxies, with hopes of uncovering insights into the origins of the universe.",
-        "image": news3
-    },
-    {
-        "id": 4,
-        "title": "Stock Markets Reach Record Highs Amid Economic Recovery",
-        "description": "Global stock markets have reached record highs as signs of economic recovery continue to emerge following the challenges posed by the global pandemic.",
-        "image": news4
-    },
-    {
-        "id": 5,
-        "title": "Innovative New Smartphone Released by Leading Tech Company",
-        "description": "A leading tech company has released its latest smartphone model, featuring cutting-edge technology, improved battery life, and a sleek new design.",
-        "image": news2
-    }
-]
+  {
+    id: 1,
+    title: "From Trash to Treasure: How Students Are Saving Books",
+    description: "Instead of discarding old textbooks, students are sharing them with others through our platform — reducing waste and making education more affordable.",
+    image: news1
+  },
+  {
+    id: 2,
+    title: "Second-Hand, First-Class: The Rise of Reused Books",
+    description: "Learn how reused books are benefiting students and the environment — with stories from our campus contributors who’ve saved big through peer-to-peer exchanges.",
+    image: news2
+  },
+  {
+    id: 3,
+    title: "Why Buying Used Is the Smart Student Choice",
+    description: "Used books not only save money — they come with notes, highlights, and insights that can help the next student understand topics better.",
+    image: news3
+  },
+  {
+    id: 4,
+    title: "How One Book Helped Three Students Succeed",
+    description: "A single book passed through three students — each sharing their own experience. Find out how shared books build a stronger academic community.",
+    image: news4
+  },
+  {
+    id: 5,
+    title: "Eco-Friendly Education: The Power of Reuse",
+    description: "Sustainable student living starts with responsible choices. See how book sharing is reducing our academic carbon footprint.",
+    image: news2
+  }
+];
 
 const News = () => {
   return (
