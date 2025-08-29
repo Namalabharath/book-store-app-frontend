@@ -12,6 +12,7 @@ import AdminRoute from "./AdminRoute";
 import DashboardLayout from "../pages/dashboard/DashboardLayout";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ManageBooks from "../pages/dashboard/manageBooks/ManageBooks";
+import ManageOrders from "../pages/dashboard/manageOrders/ManageOrders";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import UpdateBook from "../pages/dashboard/EditBook/UpdateBook";
 import AccessDenied from "../components/AccessDenied";
@@ -84,6 +85,12 @@ const router = createBrowserRouter([
               path: "manage-books",
               element: <AdminRoute>
                 <ManageBooks/>
+              </AdminRoute>
+            },
+            {
+              path: "manage-orders",
+              element: <AdminRoute>
+                <ManageOrders/>
               </AdminRoute>
             }
           ]

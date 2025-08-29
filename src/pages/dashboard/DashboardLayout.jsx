@@ -5,6 +5,7 @@ import Loading from '../../components/Loading';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { HiViewGridAdd } from "react-icons/hi";
 import { MdOutlineManageHistory } from "react-icons/md";
+import { FaClipboardList } from "react-icons/fa";
 import { useAuth } from '../../context/AuthContext';
 
 const DashboardLayout = () => {
@@ -41,8 +42,12 @@ const DashboardLayout = () => {
             <HiViewGridAdd className="h-6 w-6"/>
           </Link>
           <Link to="/dashboard/manage-books" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
-            <span className="sr-only">Documents</span>
+            <span className="sr-only">Manage Books</span>
             <MdOutlineManageHistory className="h-6 w-6"/>
+          </Link>
+          <Link to="/dashboard/manage-orders" className="inline-flex items-center justify-center py-3 hover:text-gray-400 hover:bg-gray-700 focus:text-gray-400 focus:bg-gray-700 rounded-lg">
+            <span className="sr-only">Manage Orders</span>
+            <FaClipboardList className="h-6 w-6"/>
           </Link>
         </nav>
         <div className="inline-flex items-center justify-center h-20 w-20 border-t border-gray-700">

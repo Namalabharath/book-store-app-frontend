@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
     // Register a user
     const registerUser = async (userData) => {
         try {
-            const response = await fetch(`${getBaseUrl()}/api/auth/register`, {
+            const response = await fetch(`${getBaseUrl()}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
     // Login the user
     const loginUser = async (email, password) => {
         try {
-            const response = await fetch(`${getBaseUrl()}/api/auth/login`, {
+            const response = await fetch(`${getBaseUrl()}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,16 +96,13 @@ export const AuthProvider = ({ children }) => {
 
     // Initialize auth state
     useEffect(() => {
-        console.log('AuthProvider: Initializing auth state...');
         const user = getCurrentUser();
-        console.log('AuthProvider: Current user from token:', user);
         setCurrentUser(user);
         // Load user's cart if logged in
         if (user) {
             dispatch(loadUserCart(user.id));
         }
         setLoading(false);
-        console.log('AuthProvider: Auth state initialized');
     }, [dispatch]);
 
     const value = {

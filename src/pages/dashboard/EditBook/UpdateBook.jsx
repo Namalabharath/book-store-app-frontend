@@ -12,7 +12,6 @@ import getBaseUrl from '../../../utils/baseURL';
 const UpdateBook = () => {
   const { id } = useParams();
   const { data: bookData, isLoading, isError, refetch } = useFetchBookByIdQuery(id);
-  // console.log(bookData)
   const [updateBook] = useUpdateBookMutation();
   const { register, handleSubmit, setValue, reset } = useForm();
   useEffect(() => {
@@ -38,7 +37,7 @@ const UpdateBook = () => {
       coverImage: data.coverImage || bookData.coverImage,
     };
     try {
-      await axios.put(`${getBaseUrl()}/api/books/edit/${id}`, updateBookData, {
+      await axios.put(`${getBaseUrl()}/books/edit/${id}`, updateBookData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -55,7 +54,6 @@ const UpdateBook = () => {
       });
       await refetch()
     } catch (error) {
-      console.log("Failed to update book.");
       alert("Failed to update book.");
     }
   }
