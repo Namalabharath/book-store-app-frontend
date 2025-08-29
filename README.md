@@ -20,7 +20,6 @@ A full-stack e-commerce book store application built with React.js frontend and 
 - **Admin Dashboard**: Comprehensive admin panel
 - **Book Management**: Add, edit, delete books
 - **Order Management**: View all orders and update order status
-- **User Management**: View registered users
 - **Statistics**: Sales and order analytics
 
 ## 🛠️ Tech Stack
@@ -41,7 +40,6 @@ A full-stack e-commerce book store application built with React.js frontend and 
 - **Mongoose** - MongoDB ODM
 - **JWT** - Authentication
 - **Razorpay SDK** - Payment processing
-- **Multer** - File uploads
 - **CORS** - Cross-origin requests
 
 ## 📁 Project Structure
@@ -117,14 +115,7 @@ book-store-app/
 
 3. **Environment Variables**
    Create a `.env.local` file in the frontend directory:
-   ```env
-   VITE_API_KEY=your_firebase_api_key
-   VITE_Auth_Domain=your_firebase_auth_domain
-   VITE_PROJECT_ID=your_firebase_project_id
-   VITE_STORAGE_BUCKET=your_firebase_storage_bucket
-   VITE_MESSAGING_SENDERID=your_firebase_messaging_sender_id
-   VITE_APPID=your_firebase_app_id
-   ```
+
 
 4. **Start the development server**
    ```bash
@@ -213,7 +204,7 @@ This project is licensed under the MIT License.
 
 ## 🆘 Support
 
-For support, email [your-email@example.com] or create an issue on GitHub.
+For support, create an issue on GitHub.
 
 ---
 
